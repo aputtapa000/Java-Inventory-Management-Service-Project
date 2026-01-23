@@ -1,0 +1,10 @@
+{
+    "java.import.maven.enabled": true,
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.project.sourcePaths": [
+        "springboot-kafka-inventory-mgmt/src/main/java",
+        "springboot-kafka-inventory-mgmt/src/test/java"
+    ],
+    "java.debug.settings.console": "integratedTerminal",
+    "java.compile.nullAnalysis.mode": "automatic"
+}

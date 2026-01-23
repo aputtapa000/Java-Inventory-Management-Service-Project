@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "SpringbootKafkaApplication",
+            "request": "launch",
+            "mainClass": "com.aatreya.inventorymgmt.SpringbootKafkaApplication",
+            "projectName": "inventory-mgmt-service"
+        },
+        {
+            "type": "java",
+            "name": "SpringbootKafkaApplication",
+            "request": "launch",
+            "mainClass": "com.aatreya.inventorymgmt.SpringbootKafkaApplication",
+            "projectName": "springboot-kafka-inventory-mgmt",
+            "cwd": "${workspaceFolder}/springboot-kafka-inventory-mgmt",
+            "console": "integratedTerminal"
+        }
+    ]
+}
