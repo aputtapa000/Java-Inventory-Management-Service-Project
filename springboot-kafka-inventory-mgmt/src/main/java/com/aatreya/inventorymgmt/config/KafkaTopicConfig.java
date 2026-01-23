@@ -32,10 +32,36 @@ public class KafkaTopicConfig {
     
     //Item (Catalog Feed) Topics
     
+    @Bean
+    public NewTopic itemFirstSecondPartyTopic() {
+        return TopicBuilder.name("item-first-second-party-topic").build();
+    }
 
+    @Bean
+    public NewTopic itemDSVTopic() {
+        return TopicBuilder.name("item-DSV-topic").build();
+    }
 
+    @Bean
+    public NewTopic itemMarketplaceTopic() {
+        return TopicBuilder.name("item-marketplace-topic").build();
+    }
 
     //ShipNode Topics
 
+    @Bean
+    public NewTopic shipNodeFirstSecondPartyTopic() {
+        return TopicBuilder.name("shipnode-first-second-party-topic").build();
+    }
+
+    @Bean
+    public NewTopic shipNodeDSVTopic() {
+        return TopicBuilder.name("shipnode-DSV-topic").build();
+    }
+
+    @Bean
+    public NewTopic shipNodeMarketplaceTopic() {
+        return TopicBuilder.name("shipnode-marketplace-topic").build();
+    }
 
 }
