@@ -10,8 +10,8 @@ public class KafkaTopicConfig {
 
     // Inventory Management Topics
     @Bean
-    public NewTopic inventoryFirstPartyTopic() {
-        return TopicBuilder.name("inventory-first-party-topic").build();
+    public NewTopic inventoryFirstSecondPartyTopic() {
+        return TopicBuilder.name("inventory-first-second-party-topic").build();
     }
 
     @Bean
