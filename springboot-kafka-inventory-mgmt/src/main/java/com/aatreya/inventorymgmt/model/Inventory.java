@@ -1,21 +1,25 @@
 package com.aatreya.inventorymgmt.model;
 
 import com.azure.spring.data.cosmos.core.mapping.Container;
+import com.azure.spring.data.cosmos.core.mapping.PartitionKey;
 import org.springframework.data.annotation.Id;
 
 @Container(containerName = "inventory")
 public class Inventory {
 
     @Id
-    public int id;
+    public String id;
     public String itemName;
     public int quantity;
     public String warehouseLocation;
+    @PartitionKey
     public String shipNode;
 
+    // Default constructor required for JSON deserialization
+    public Inventory() {
+    }
 
-    public Inventory(int id, String itemName, int quantity, String warehouseLocation, String shipNode) {
-        this.id = id;
+    public Inventory(String itemName, int quantity, String warehouseLocation, String shipNode) {
         this.itemName = itemName;
         this.quantity = quantity;
         this.warehouseLocation = warehouseLocation;
@@ -23,12 +27,12 @@ public class Inventory {
     }
 
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

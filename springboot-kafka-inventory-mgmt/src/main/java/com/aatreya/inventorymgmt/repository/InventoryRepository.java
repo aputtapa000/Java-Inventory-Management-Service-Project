@@ -5,6 +5,6 @@ import com.aatreya.inventorymgmt.model.Inventory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface InventoryRepository extends CosmosRepository<Inventory, Integer> {
+public interface InventoryRepository extends CosmosRepository<Inventory, String> {
 
 }

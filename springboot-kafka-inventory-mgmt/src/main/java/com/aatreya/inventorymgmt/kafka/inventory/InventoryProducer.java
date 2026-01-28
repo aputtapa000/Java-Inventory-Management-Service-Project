@@ -1,5 +1,6 @@
 package com.aatreya.inventorymgmt.kafka.inventory;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
@@ -14,10 +15,11 @@ public class InventoryProducer {
 
     private KafkaTemplate<String, Inventory> kafkaTemplate;
 
-    public InventoryProducer(KafkaTemplate<String, Inventory> kafkaTemplate) {
+    public InventoryProducer(@Qualifier("inventoryKafkaTemplate") KafkaTemplate<String, Inventory> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
+    @SuppressWarnings("null")
     public void sendMessage(String topic, Inventory inventory) {
         
 
