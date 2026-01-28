@@ -3,13 +3,15 @@ package com.aatreya.inventorymgmt.kafka.inventory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
+import com.aatreya.inventorymgmt.model.Inventory;
+
 @Service
 public class InventoryConsumerMarketplace {
 
     private static final org.slf4j.Logger LOGGER = org.slf4j.LoggerFactory.getLogger(InventoryConsumerMarketplace.class);
 
     @KafkaListener(topics = "inventory-marketplace-topic", groupId = "inventory-marketplace-group")
-    public void consumer(String message) {
-        LOGGER.info(String.format("Message received -> %s", message));
+    public void consumer(Inventory inventory) {
+        LOGGER.info(String.format("Message received -> %s", inventory.toString()));
     }
 }
