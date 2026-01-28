@@ -12,42 +12,28 @@ import com.aatreya.inventorymgmt.model.Inventory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@SpringBootTest(classes = {JsonMessageController.class, JsonMessageControllerTests.TestConfig.class})
+@ExtendWith(MockitoExtension.class)
 class JsonMessageControllerTests {
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    @Autowired
     private InventoryProducer inventoryProducer;
 
-    @Autowired
     private ObjectMapper objectMapper;
 
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-    }
-
-    @TestConfiguration
-    static class TestConfig {
-        @Bean
-        InventoryProducer inventoryProducer() {
-            return Mockito.mock(InventoryProducer.class);
-        }
+        inventoryProducer = Mockito.mock(InventoryProducer.class);
+        objectMapper = new ObjectMapper();
+        mockMvc = MockMvcBuilders.standaloneSetup(new JsonMessageController(inventoryProducer)).build();
     }
 
     @Test

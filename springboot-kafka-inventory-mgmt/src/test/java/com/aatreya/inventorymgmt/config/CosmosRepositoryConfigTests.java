@@ -2,29 +2,39 @@ package com.aatreya.inventorymgmt.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.azure.spring.data.cosmos.core.CosmosTemplate;
+import com.azure.spring.data.cosmos.core.convert.MappingCosmosConverter;
+import com.azure.spring.data.cosmos.core.mapping.CosmosMappingContext;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
-import org.springframework.context.ApplicationContext;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.Mockito;
 
-@SpringBootTest(classes = CosmosRepositoryConfig.class, properties = "spring.cloud.azure.cosmos.enabled=true")
 class CosmosRepositoryConfigTests {
 
-    @Autowired
-    private ApplicationContext applicationContext;
+    private final ApplicationContextRunner contextRunner =
+            new ApplicationContextRunner().withUserConfiguration(CosmosRepositoryConfig.class);
 
     @Test
     void configEnabled_registersConfigurationBean() {
-        assertThat(applicationContext.getBean(CosmosRepositoryConfig.class)).isNotNull();
+        contextRunner
+            .withPropertyValues("spring.cloud.azure.cosmos.enabled=true")
+                .withBean("cosmosTemplate", CosmosTemplate.class, this::mockCosmosTemplate)
+            .run(context -> assertThat(context).hasSingleBean(CosmosRepositoryConfig.class));
     }
 
     @Test
     void configDisabled_doesNotRegisterConfigurationBean() {
-        ApplicationContextRunner runner = new ApplicationContextRunner()
-                .withUserConfiguration(CosmosRepositoryConfig.class)
-                .withPropertyValues("spring.cloud.azure.cosmos.enabled=false");
+        contextRunner
+            .withPropertyValues("spring.cloud.azure.cosmos.enabled=false")
+            .run(context -> assertThat(context).doesNotHaveBean(CosmosRepositoryConfig.class));
+    }
 
-        runner.run(context -> assertThat(context).doesNotHaveBean(CosmosRepositoryConfig.class));
+    private CosmosTemplate mockCosmosTemplate() {
+        CosmosTemplate template = Mockito.mock(CosmosTemplate.class);
+        MappingCosmosConverter converter = Mockito.mock(MappingCosmosConverter.class);
+        CosmosMappingContext mappingContext = new CosmosMappingContext();
+        Mockito.when(converter.getMappingContext()).thenReturn(mappingContext);
+        Mockito.when(template.getConverter()).thenReturn(converter);
+        return template;
     }
 }

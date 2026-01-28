@@ -5,6 +5,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 
 import com.aatreya.inventorymgmt.model.Inventory;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -34,6 +35,11 @@ class InventoryProducerTests {
                     (KafkaTemplate<String, Inventory>) Mockito.mock(KafkaTemplate.class);
             return template;
         }
+    }
+
+    @BeforeEach
+    void resetMocks() {
+        Mockito.reset((Object) inventoryKafkaTemplate);
     }
 
     @Test

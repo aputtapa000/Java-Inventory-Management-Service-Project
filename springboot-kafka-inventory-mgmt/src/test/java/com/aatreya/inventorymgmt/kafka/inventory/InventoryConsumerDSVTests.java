@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verifyNoInteractions;
 
 import com.aatreya.inventorymgmt.model.Inventory;
 import com.aatreya.inventorymgmt.repository.InventoryRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,11 @@ class InventoryConsumerDSVTests {
         InventoryRepository inventoryRepository() {
             return Mockito.mock(InventoryRepository.class);
         }
+    }
+
+    @BeforeEach
+    void resetMocks() {
+        Mockito.reset((Object) inventoryRepository);
     }
 
     @Test

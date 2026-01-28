@@ -4,6 +4,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 
 import com.aatreya.inventorymgmt.kafka.KafkaProducer;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,11 @@ class ItemProducerTests {
         KafkaProducer kafkaProducer() {
             return Mockito.mock(KafkaProducer.class);
         }
+    }
+
+    @BeforeEach
+    void resetMocks() {
+        Mockito.reset(kafkaProducer);
     }
 
     @Test
