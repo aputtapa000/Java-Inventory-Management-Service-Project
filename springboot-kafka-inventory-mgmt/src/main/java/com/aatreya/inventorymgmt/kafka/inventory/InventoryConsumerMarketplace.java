@@ -24,13 +24,13 @@ public class InventoryConsumerMarketplace {
             LOGGER.info(String.format("Message received -> %s", inventory.toString()));
             
             // Validate required fields
-            if (inventory.getShipNode() == null || inventory.getShipNode().isEmpty()) {
+            if (inventory.getShipNode() == null ){
                 LOGGER.error("ShipNode (partition key) cannot be null or empty");
                 return;
             }
             
             inventoryRepository.save(inventory);
-            LOGGER.info(String.format("Inventory saved to Cosmos DB with ID: %s", inventory.getId()));
+            LOGGER.info(String.format("Inventory saved to Cosmos DB with ID: %s", inventory.getUpdateId()));
         } catch (Exception e) {
             LOGGER.error(String.format("Error saving inventory to database: %s", e.getMessage()), e);
         }
