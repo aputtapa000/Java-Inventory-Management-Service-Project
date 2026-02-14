@@ -6,6 +6,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 
 import com.aatreya.inventorymgmt.model.Inventory;
+import com.aatreya.inventorymgmt.model.Item;
+import com.aatreya.inventorymgmt.model.ShipNode;
 import com.aatreya.inventorymgmt.repository.InventoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,7 +43,7 @@ class InventoryConsumerMarketplaceTests {
 
     @Test
     void consumer_validInventory_savesToRepository() {
-        Inventory inventory = new Inventory("item", 10, "loc", "sn-1");
+        Inventory inventory = validInventory();
 
         consumer.consumer(inventory);
 
@@ -50,7 +52,8 @@ class InventoryConsumerMarketplaceTests {
 
     @Test
     void consumer_missingShipNode_doesNotSave() {
-        Inventory inventory = new Inventory("item", 10, "loc", "");
+        Inventory inventory = validInventory();
+        inventory.setShipNode(null);
 
         consumer.consumer(inventory);
 
@@ -59,10 +62,23 @@ class InventoryConsumerMarketplaceTests {
 
     @Test
     void consumer_repositoryThrows_doesNotPropagateException() {
-        Inventory inventory = new Inventory("item", 10, "loc", "sn-1");
+        Inventory inventory = validInventory();
         doThrow(new RuntimeException("boom")).when(inventoryRepository).save(inventory);
 
         assertThatCode(() -> consumer.consumer(inventory)).doesNotThrowAnyException();
         verify(inventoryRepository).save(inventory);
+    }
+
+    private Inventory validInventory() {
+        return new Inventory(
+                "id-1",
+                new Item(),
+                10,
+                "upc",
+                "gtin",
+                "win",
+                "ean",
+                123L,
+                new ShipNode());
     }
 }

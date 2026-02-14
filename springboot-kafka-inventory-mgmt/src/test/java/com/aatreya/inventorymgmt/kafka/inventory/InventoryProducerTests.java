@@ -5,6 +5,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 
 import com.aatreya.inventorymgmt.model.Inventory;
+import com.aatreya.inventorymgmt.model.Item;
+import com.aatreya.inventorymgmt.model.ShipNode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -45,7 +47,16 @@ class InventoryProducerTests {
     @Test
     @SuppressWarnings("null")
     void sendMessage_validTopic_sendsMessageWithTopicHeader() {
-        Inventory inventory = new Inventory("item", 1, "loc", "sn-1");
+        Inventory inventory = new Inventory(
+            "id-1",
+            new Item(),
+            1,
+            "upc",
+            "gtin",
+            "win",
+            "ean",
+            123L,
+            new ShipNode());
 
         inventoryProducer.sendMessage("inventory-store-topic", inventory);
 
@@ -59,21 +70,21 @@ class InventoryProducerTests {
 
     @Test
     void sendMessage_nullTopic_doesNotSend() {
-        Inventory inventory = new Inventory("item", 1, "loc", "sn-1");
+        Inventory inventory = new Inventory();
         inventoryProducer.sendMessage(null, inventory);
         verifyNoInteractions(inventoryKafkaTemplate);
     }
 
     @Test
     void sendMessage_emptyTopic_doesNotSend() {
-        Inventory inventory = new Inventory("item", 1, "loc", "sn-1");
+        Inventory inventory = new Inventory();
         inventoryProducer.sendMessage("", inventory);
         verifyNoInteractions(inventoryKafkaTemplate);
     }
 
     @Test
     void sendMessage_unknownTopic_doesNotSend() {
-        Inventory inventory = new Inventory("item", 1, "loc", "sn-1");
+        Inventory inventory = new Inventory();
         inventoryProducer.sendMessage("unknown-topic", inventory);
         verifyNoInteractions(inventoryKafkaTemplate);
     }

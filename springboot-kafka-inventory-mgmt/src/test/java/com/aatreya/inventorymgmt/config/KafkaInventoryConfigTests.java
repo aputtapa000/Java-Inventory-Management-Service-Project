@@ -3,6 +3,8 @@ package com.aatreya.inventorymgmt.config;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.aatreya.inventorymgmt.model.Inventory;
+import com.aatreya.inventorymgmt.model.Item;
+import com.aatreya.inventorymgmt.model.ShipNode;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,54 +27,74 @@ class KafkaInventoryConfigTests {
     private ProducerFactory<String, Inventory> inventoryProducerFactory;
 
     @Autowired
-    @Qualifier("stringProducerFactory")
-    private ProducerFactory<String, String> stringProducerFactory;
+    @Qualifier("itemProducerFactory")
+    private ProducerFactory<String, Item> itemProducerFactory;
+
+    @Autowired
+    @Qualifier("shipNodeProducerFactory")
+    private ProducerFactory<String, ShipNode> shipNodeProducerFactory;
 
     @Autowired
     @Qualifier("inventoryKafkaTemplate")
     private KafkaTemplate<String, Inventory> inventoryKafkaTemplate;
 
     @Autowired
-    @Qualifier("kafkaTemplate")
-    private KafkaTemplate<String, String> kafkaTemplate;
+    @Qualifier("itemKafkaTemplate")
+    private KafkaTemplate<String, Item> itemKafkaTemplate;
+
+    @Autowired
+    @Qualifier("shipNodeKafkaTemplate")
+    private KafkaTemplate<String, ShipNode> shipNodeKafkaTemplate;
 
     @Autowired
     @Qualifier("inventoryConsumerFactory")
     private ConsumerFactory<String, Inventory> inventoryConsumerFactory;
 
     @Autowired
-    @Qualifier("stringConsumerFactory")
-    private ConsumerFactory<String, String> stringConsumerFactory;
+    @Qualifier("itemConsumerFactory")
+    private ConsumerFactory<String, Item> itemConsumerFactory;
+
+    @Autowired
+    @Qualifier("shipNodeConsumerFactory")
+    private ConsumerFactory<String, ShipNode> shipNodeConsumerFactory;
 
     @Autowired
     @Qualifier("inventoryKafkaListenerContainerFactory")
     private ConcurrentKafkaListenerContainerFactory<String, Inventory> inventoryKafkaListenerContainerFactory;
 
     @Autowired
-    @Qualifier("kafkaListenerContainerFactory")
-    private ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory;
+    @Qualifier("itemKafkaListenerContainerFactory")
+    private ConcurrentKafkaListenerContainerFactory<String, Item> itemKafkaListenerContainerFactory;
+
+    @Autowired
+    @Qualifier("shipNodeKafkaListenerContainerFactory")
+    private ConcurrentKafkaListenerContainerFactory<String, ShipNode> shipNodeKafkaListenerContainerFactory;
 
     @Test
     void producerFactories_areCreated() {
         assertThat(inventoryProducerFactory).isNotNull();
-        assertThat(stringProducerFactory).isNotNull();
+        assertThat(itemProducerFactory).isNotNull();
+        assertThat(shipNodeProducerFactory).isNotNull();
     }
 
     @Test
     void kafkaTemplates_areCreated() {
         assertThat(inventoryKafkaTemplate).isNotNull();
-        assertThat(kafkaTemplate).isNotNull();
+        assertThat(itemKafkaTemplate).isNotNull();
+        assertThat(shipNodeKafkaTemplate).isNotNull();
     }
 
     @Test
     void consumerFactories_areCreated() {
         assertThat(inventoryConsumerFactory).isNotNull();
-        assertThat(stringConsumerFactory).isNotNull();
+        assertThat(itemConsumerFactory).isNotNull();
+        assertThat(shipNodeConsumerFactory).isNotNull();
     }
 
     @Test
     void listenerContainerFactories_areCreated() {
         assertThat(inventoryKafkaListenerContainerFactory).isNotNull();
-        assertThat(kafkaListenerContainerFactory).isNotNull();
+        assertThat(itemKafkaListenerContainerFactory).isNotNull();
+        assertThat(shipNodeKafkaListenerContainerFactory).isNotNull();
     }
 }
