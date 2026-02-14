@@ -8,81 +8,110 @@ import org.springframework.data.annotation.Id;
 public class Inventory {
 
     @Id
-    public String id;
-    public String itemName;
-    public int quantity;
-    public String warehouseLocation;
+    private String updateId;
+    private Item itemName;
+    private long quantityUpdate;
+    private String UPC;
+    private String GTIN;
+    private String WIN;
+    private String EAN;
+    private long ISBN;
     @PartitionKey
-    public String shipNode;
+    private ShipNode shipNode;
 
-    // Default constructor required for JSON deserialization
     public Inventory() {
     }
 
-    public Inventory(String itemName, int quantity, String warehouseLocation, String shipNode) {
+    public Inventory(String updateId, Item itemName, long quantityUpdate, String uPC, String gTIN, String wIN,
+            String eAN, long iSBN, ShipNode shipNode) {
+        this.updateId = updateId;
         this.itemName = itemName;
-        this.quantity = quantity;
-        this.warehouseLocation = warehouseLocation;
+        this.quantityUpdate = quantityUpdate;
+        UPC = uPC;
+        GTIN = gTIN;
+        WIN = wIN;
+        EAN = eAN;
+        ISBN = iSBN;
         this.shipNode = shipNode;
     }
 
-
-    public String getId() {
-        return id;
+    public String getUpdateId() {
+        return updateId;
     }
 
-
-    public void setId(String id) {
-        this.id = id;
+    public void setUpdateId(String updateId) {
+        this.updateId = updateId;
     }
 
-
-    public String getItemName() {
+    public Item getItemName() {
         return itemName;
     }
 
-
-    public void setItemName(String itemName) {
+    public void setItemName(Item itemName) {
         this.itemName = itemName;
     }
 
-
-    public int getQuantity() {
-        return quantity;
+    public long getQuantityUpdate() {
+        return quantityUpdate;
     }
 
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setQuantityUpdate(long quantityUpdate) {
+        this.quantityUpdate = quantityUpdate;
     }
 
-
-    public String getWarehouseLocation() {
-        return warehouseLocation;
+    public String getUPC() {
+        return UPC;
     }
 
-
-    public void setWarehouseLocation(String warehouseLocation) {
-        this.warehouseLocation = warehouseLocation;
+    public void setUPC(String uPC) {
+        UPC = uPC;
     }
 
+    public String getGTIN() {
+        return GTIN;
+    }
 
-    public String getShipNode() {
+    public void setGTIN(String gTIN) {
+        GTIN = gTIN;
+    }
+
+    public String getWIN() {
+        return WIN;
+    }
+
+    public void setWIN(String wIN) {
+        WIN = wIN;
+    }
+
+    public String getEAN() {
+        return EAN;
+    }
+
+    public void setEAN(String eAN) {
+        EAN = eAN;
+    }
+
+    public long getISBN() {
+        return ISBN;
+    }
+
+    public void setISBN(long iSBN) {
+        ISBN = iSBN;
+    }
+
+    public ShipNode getShipNode() {
         return shipNode;
     }
 
-
-    public void setShipNode(String shipNode) {
+    public void setShipNode(ShipNode shipNode) {
         this.shipNode = shipNode;
     }
 
-
     @Override
     public String toString() {
-        return "Inventory [id=" + id + ", itemName=" + itemName + ", quantity=" + quantity + ", warehouseLocation="
-                + warehouseLocation + ", shipNode=" + shipNode + "]";
+        return "Inventory [updateId=" + updateId + ", itemName=" + itemName + ", quantityUpdate=" + quantityUpdate
+                + ", UPC=" + UPC + ", GTIN=" + GTIN + ", WIN=" + WIN + ", EAN=" + EAN + ", ISBN=" + ISBN + ", shipNode="
+                + shipNode + "]";
     }
-    
-    
 
 }

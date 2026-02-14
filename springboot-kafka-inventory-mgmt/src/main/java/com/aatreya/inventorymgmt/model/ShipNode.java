@@ -1,0 +1,86 @@
+package com.aatreya.inventorymgmt.model;
+import com.azure.spring.data.cosmos.core.mapping.Container;
+import com.azure.spring.data.cosmos.core.mapping.PartitionKey;
+import org.springframework.data.annotation.Id;
+
+@Container(containerName = "ShipNode")
+public class ShipNode {
+    @Id
+    private long id;
+    private String name;
+    private boolean isActive;
+    private boolean activeOperation;
+    private boolean ecommActiveOperation;
+    @PartitionKey // Need to clarify if multiple parties are supported for a given ship node.
+    private String type;
+    
+    public ShipNode() {
+    }
+
+    public ShipNode(long id, String name, boolean isActive, boolean activeOperation, boolean ecommActiveOperation,
+            String type) {
+        this.id = id;
+        this.name = name;
+        this.isActive = isActive;
+        this.activeOperation = activeOperation;
+        this.ecommActiveOperation = ecommActiveOperation;
+        this.type = type;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public boolean isActiveOperation() {
+        return activeOperation;
+    }
+
+    public void setActiveOperation(boolean activeOperation) {
+        this.activeOperation = activeOperation;
+    }
+
+    public boolean isEcommActiveOperation() {
+        return ecommActiveOperation;
+    }
+
+    public void setEcommActiveOperation(boolean ecommActiveOperation) {
+        this.ecommActiveOperation = ecommActiveOperation;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "ShipNode [id=" + id + ", name=" + name + ", isActive=" + isActive + ", activeOperation="
+                + activeOperation + ", ecommActiveOperation=" + ecommActiveOperation + ", type=" + type + "]";
+    }
+
+    
+
+}
