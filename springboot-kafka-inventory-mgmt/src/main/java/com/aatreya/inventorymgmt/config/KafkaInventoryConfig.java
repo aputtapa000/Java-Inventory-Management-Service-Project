@@ -1,6 +1,6 @@
 package com.aatreya.inventorymgmt.config;
 
-import com.aatreya.inventorymgmt.model.Inventory;
+import com.aatreya.inventorymgmt.model.*;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -24,8 +24,7 @@ public class KafkaInventoryConfig {
 
     // Producer Configurations
     @Bean
-    public ProducerFactory<String, Inventory> inventoryProducerFactory(
-            @Value("${spring.kafka.bootstrap-servers}") String bootstrapServers) {
+    public ProducerFactory<String, Inventory> inventoryProducerFactory(@Value("${spring.kafka.bootstrap-servers}") String bootstrapServers) {
         Map<String, Object> config = new HashMap<>();
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -34,14 +33,23 @@ public class KafkaInventoryConfig {
     }
 
     @Bean
-    public ProducerFactory<String, String> stringProducerFactory(
-            @Value("${spring.kafka.bootstrap-servers}") String bootstrapServers) {
+    public ProducerFactory<String, Item> itemProducerFactory(@Value("${spring.kafka.bootstrap-servers}") String bootstrapServers) {
         Map<String, Object> config = new HashMap<>();
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         return new DefaultKafkaProducerFactory<>(config);
     }
+
+    @Bean
+    public ProducerFactory<String, ShipNode> shipNodeProducerFactory(@Value("${spring.kafka.bootstrap-servers}") String bootstrapServers) {
+        Map<String, Object> config = new HashMap<>();
+        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        return new DefaultKafkaProducerFactory<>(config);
+    }
+
 
     // Kafka Templates
     @Bean
@@ -53,9 +61,16 @@ public class KafkaInventoryConfig {
 
     @Bean
     @SuppressWarnings("null")
-    public KafkaTemplate<String, String> kafkaTemplate(
-            ProducerFactory<String, String> stringProducerFactory) {
-        return new KafkaTemplate<>(stringProducerFactory);
+    public KafkaTemplate<String, Item> itemKafkaTemplate(
+            ProducerFactory<String, Item> itemProducerFactory) {
+        return new KafkaTemplate<>(itemProducerFactory);
+    }
+
+    @Bean
+    @SuppressWarnings("null")
+    public KafkaTemplate<String, ShipNode> shipNodeKafkaTemplate(
+            ProducerFactory<String, ShipNode> shipNodeProducerFactory) {
+        return new KafkaTemplate<>(shipNodeProducerFactory);
     }
 
     // Consumer Configurations
@@ -73,15 +88,29 @@ public class KafkaInventoryConfig {
     }
 
     @Bean
-    public ConsumerFactory<String, String> stringConsumerFactory(
+    public ConsumerFactory<String, Item> itemConsumerFactory(
             @Value("${spring.kafka.bootstrap-servers}") String bootstrapServers,
             @Value("${spring.kafka.consumer.auto-offset-reset:earliest}") String autoOffsetReset) {
         Map<String, Object> config = new HashMap<>();
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, autoOffsetReset);
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), new StringDeserializer());
+        JsonDeserializer<Item> valueDeserializer = new JsonDeserializer<>(Item.class);
+        valueDeserializer.addTrustedPackages("com.aatreya.inventorymgmt.model");
+        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), valueDeserializer);
+    }
+
+    @Bean
+    public ConsumerFactory<String, ShipNode> shipNodeConsumerFactory(
+            @Value("${spring.kafka.bootstrap-servers}") String bootstrapServers,
+            @Value("${spring.kafka.consumer.auto-offset-reset:earliest}") String autoOffsetReset) {
+        Map<String, Object> config = new HashMap<>();
+        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, autoOffsetReset);
+        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        JsonDeserializer<ShipNode> valueDeserializer = new JsonDeserializer<>(ShipNode.class);
+        valueDeserializer.addTrustedPackages("com.aatreya.inventorymgmt.model");
+        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), valueDeserializer);
     }
 
     // Kafka Listener Container Factories
@@ -95,13 +124,23 @@ public class KafkaInventoryConfig {
         return factory;
     }
 
-            @Bean
+    @Bean
             @SuppressWarnings("null")
-            public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory(
-                    ConsumerFactory<String, String> stringConsumerFactory) {
-                ConcurrentKafkaListenerContainerFactory<String, String> factory =
-                        new ConcurrentKafkaListenerContainerFactory<>();
-                factory.setConsumerFactory(stringConsumerFactory);
-                return factory;
-            }
+            public ConcurrentKafkaListenerContainerFactory<String, Item> itemKafkaListenerContainerFactory(
+                ConsumerFactory<String, Item> itemConsumerFactory) {
+        ConcurrentKafkaListenerContainerFactory<String, Item> factory =
+                new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(itemConsumerFactory);
+        return factory;
+    }
+
+    @Bean
+            @SuppressWarnings("null")
+            public ConcurrentKafkaListenerContainerFactory<String, ShipNode> shipNodeKafkaListenerContainerFactory(
+                ConsumerFactory<String, ShipNode> shipNodeConsumerFactory) {
+        ConcurrentKafkaListenerContainerFactory<String, ShipNode> factory =
+                new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(shipNodeConsumerFactory);
+        return factory;
+    }
 }
