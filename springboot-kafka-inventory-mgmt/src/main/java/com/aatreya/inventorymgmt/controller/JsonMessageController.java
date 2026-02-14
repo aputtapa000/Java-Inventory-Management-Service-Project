@@ -1,6 +1,5 @@
 package com.aatreya.inventorymgmt.controller;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.aatreya.inventorymgmt.kafka.inventory.InventoryProducer;
