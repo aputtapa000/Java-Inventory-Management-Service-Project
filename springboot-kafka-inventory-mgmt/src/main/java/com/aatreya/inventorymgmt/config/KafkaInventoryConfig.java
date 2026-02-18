@@ -24,7 +24,8 @@ public class KafkaInventoryConfig {
 
     // Producer Configurations
     @Bean
-    public ProducerFactory<String, Inventory> inventoryProducerFactory(@Value("${spring.kafka.bootstrap-servers}") String bootstrapServers) {
+    public ProducerFactory<String, Inventory> inventoryProducerFactory(
+            @Value("${spring.kafka.bootstrap-servers}") String bootstrapServers) {
         Map<String, Object> config = new HashMap<>();
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -33,7 +34,8 @@ public class KafkaInventoryConfig {
     }
 
     @Bean
-    public ProducerFactory<String, Item> itemProducerFactory(@Value("${spring.kafka.bootstrap-servers}") String bootstrapServers) {
+    public ProducerFactory<String, Item> itemProducerFactory(
+            @Value("${spring.kafka.bootstrap-servers}") String bootstrapServers) {
         Map<String, Object> config = new HashMap<>();
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -42,14 +44,14 @@ public class KafkaInventoryConfig {
     }
 
     @Bean
-    public ProducerFactory<String, ShipNode> shipNodeProducerFactory(@Value("${spring.kafka.bootstrap-servers}") String bootstrapServers) {
+    public ProducerFactory<String, ShipNode> shipNodeProducerFactory(
+            @Value("${spring.kafka.bootstrap-servers}") String bootstrapServers) {
         Map<String, Object> config = new HashMap<>();
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         return new DefaultKafkaProducerFactory<>(config);
     }
-
 
     // Kafka Templates
     @Bean
@@ -115,31 +117,28 @@ public class KafkaInventoryConfig {
 
     // Kafka Listener Container Factories
     @Bean
-            @SuppressWarnings("null")
-            public ConcurrentKafkaListenerContainerFactory<String, Inventory> inventoryKafkaListenerContainerFactory(
-                ConsumerFactory<String, Inventory> inventoryConsumerFactory) {
-        ConcurrentKafkaListenerContainerFactory<String, Inventory> factory =
-                new ConcurrentKafkaListenerContainerFactory<>();
+    @SuppressWarnings("null")
+    public ConcurrentKafkaListenerContainerFactory<String, Inventory> inventoryKafkaListenerContainerFactory(
+            ConsumerFactory<String, Inventory> inventoryConsumerFactory) {
+        ConcurrentKafkaListenerContainerFactory<String, Inventory> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(inventoryConsumerFactory);
         return factory;
     }
 
     @Bean
-            @SuppressWarnings("null")
-            public ConcurrentKafkaListenerContainerFactory<String, Item> itemKafkaListenerContainerFactory(
-                ConsumerFactory<String, Item> itemConsumerFactory) {
-        ConcurrentKafkaListenerContainerFactory<String, Item> factory =
-                new ConcurrentKafkaListenerContainerFactory<>();
+    @SuppressWarnings("null")
+    public ConcurrentKafkaListenerContainerFactory<String, Item> itemKafkaListenerContainerFactory(
+            ConsumerFactory<String, Item> itemConsumerFactory) {
+        ConcurrentKafkaListenerContainerFactory<String, Item> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(itemConsumerFactory);
         return factory;
     }
 
     @Bean
-            @SuppressWarnings("null")
-            public ConcurrentKafkaListenerContainerFactory<String, ShipNode> shipNodeKafkaListenerContainerFactory(
-                ConsumerFactory<String, ShipNode> shipNodeConsumerFactory) {
-        ConcurrentKafkaListenerContainerFactory<String, ShipNode> factory =
-                new ConcurrentKafkaListenerContainerFactory<>();
+    @SuppressWarnings("null")
+    public ConcurrentKafkaListenerContainerFactory<String, ShipNode> shipNodeKafkaListenerContainerFactory(
+            ConsumerFactory<String, ShipNode> shipNodeConsumerFactory) {
+        ConcurrentKafkaListenerContainerFactory<String, ShipNode> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(shipNodeConsumerFactory);
         return factory;
     }

@@ -13,7 +13,6 @@ import java.util.UUID;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @RequestMapping("/api/v1/kafka")
 public class JsonMessageController {
@@ -22,23 +21,23 @@ public class JsonMessageController {
     private final ItemProducer itemProducer;
     private final ShipNodeProducer shipNodeProducer;
 
-    public JsonMessageController(InventoryProducer inventoryProducer, ItemProducer itemProducer, ShipNodeProducer shipNodeProducer) {
+    public JsonMessageController(InventoryProducer inventoryProducer, ItemProducer itemProducer,
+            ShipNodeProducer shipNodeProducer) {
         this.inventoryProducer = inventoryProducer;
         this.itemProducer = itemProducer;
         this.shipNodeProducer = shipNodeProducer;
     }
 
     @PostMapping("/inventory/publish")
-    public ResponseEntity<String> inventoryPublish(
-            @RequestBody Inventory inventory, 
+    public ResponseEntity<String> inventoryPublish(@RequestBody Inventory inventory,
             @RequestHeader("topic") String topic) {
-        
+
         // Generate UUID at the service layer before sending to Kafka
         // This ensures the same ID is used throughout the entire flow
         if (inventory.getUpdateId() == null || inventory.getUpdateId().isEmpty()) {
             inventory.setUpdateId(UUID.randomUUID().toString());
         }
-        
+
         inventoryProducer.sendMessage(topic, inventory);
         return ResponseEntity.ok("Json message sent to Kafka topic successfully");
     }
@@ -50,11 +49,10 @@ public class JsonMessageController {
     }
 
     @PostMapping("/shipnode/publish")
-    public ResponseEntity<String> shipNodePublish(@RequestBody ShipNode shipNode, @RequestHeader("topic") String topic) {
+    public ResponseEntity<String> shipNodePublish(@RequestBody ShipNode shipNode,
+            @RequestHeader("topic") String topic) {
         shipNodeProducer.sendMessage(topic, shipNode);
         return ResponseEntity.ok("Json message sent to Kafka topic successfully");
     }
-    
 
 }
-
