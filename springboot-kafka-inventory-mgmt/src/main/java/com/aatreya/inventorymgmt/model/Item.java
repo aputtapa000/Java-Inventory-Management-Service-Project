@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class Item {
     @NotNull
     @Id
-    private long sku_id;
+    private Long sku_id;
     @NotBlank
     private String name;
     private String UPC;
@@ -24,23 +24,23 @@ public class Item {
     @NotBlank
     @PartitionKey
     private String category;
-    private boolean isActive;
-    private boolean isPreOrder;
+    private Boolean isActive;
+    private Boolean isPreOrder;
     private LocalDate preOrderStartDate;
     private LocalDate preOrderEndDate;
-    private boolean isBackOrder;
+    private Boolean isBackOrder;
     private LocalDate backOrderStartDate;
     private LocalDate backOrderEndDate;
     private LocalDate ecommActiveDate;
-    private boolean marketplaceEnabled;
+    private Boolean marketplaceEnabled;
 
     public Item() {
     }
 
-    public Item(long sku_id, String name, String uPC, String gTIN, String wIN, String eAN, Long iSBN, String category,
-            boolean isActive, boolean isPreOrder, LocalDate preOrderStartDate, LocalDate preOrderEndDate,
-            boolean isBackOrder, LocalDate backOrderStartDate, LocalDate backOrderEndDate, LocalDate ecommActiveDate,
-            boolean marketplaceEnabled) {
+    public Item(Long sku_id, String name, String uPC, String gTIN, String wIN, String eAN, Long iSBN, String category,
+            Boolean isActive, Boolean isPreOrder, LocalDate preOrderStartDate, LocalDate preOrderEndDate,
+            Boolean isBackOrder, LocalDate backOrderStartDate, LocalDate backOrderEndDate, LocalDate ecommActiveDate,
+            Boolean marketplaceEnabled) {
         this.sku_id = sku_id;
         this.name = name;
         UPC = uPC;
@@ -60,11 +60,11 @@ public class Item {
         this.marketplaceEnabled = marketplaceEnabled;
     }
 
-    public long getSku_id() {
+    public Long getSku_id() {
         return sku_id;
     }
 
-    public void setSku_id(long sku_id) {
+    public void setSku_id(Long sku_id) {
         this.sku_id = sku_id;
     }
 
@@ -124,19 +124,19 @@ public class Item {
         this.category = category;
     }
 
-    public boolean isActive() {
+    public Boolean isActive() {
         return isActive;
     }
 
-    public void setActive(boolean isActive) {
+    public void setActive(Boolean isActive) {
         this.isActive = isActive;
     }
 
-    public boolean isPreOrder() {
+    public Boolean isPreOrder() {
         return isPreOrder;
     }
 
-    public void setPreOrder(boolean isPreOrder) {
+    public void setPreOrder(Boolean isPreOrder) {
         this.isPreOrder = isPreOrder;
     }
 
@@ -156,11 +156,11 @@ public class Item {
         this.preOrderEndDate = preOrderEndDate;
     }
 
-    public boolean isBackOrder() {
+    public Boolean isBackOrder() {
         return isBackOrder;
     }
 
-    public void setBackOrder(boolean isBackOrder) {
+    public void setBackOrder(Boolean isBackOrder) {
         this.isBackOrder = isBackOrder;
     }
 
@@ -188,11 +188,11 @@ public class Item {
         this.ecommActiveDate = ecommActiveDate;
     }
 
-    public boolean isMarketplaceEnabled() {
+    public Boolean isMarketplaceEnabled() {
         return marketplaceEnabled;
     }
 
-    public void setMarketplaceEnabled(boolean marketplaceEnabled) {
+    public void setMarketplaceEnabled(Boolean marketplaceEnabled) {
         this.marketplaceEnabled = marketplaceEnabled;
     }
 

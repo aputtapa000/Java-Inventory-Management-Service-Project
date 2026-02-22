@@ -14,9 +14,9 @@ public class ShipNode {
     private Long id;
     @NotBlank
     private String name;
-    private boolean isActive;
-    private boolean activeOperation;
-    private boolean ecommActiveOperation;
+    private Boolean isActive;
+    private Boolean activeOperation;
+    private Boolean ecommActiveOperation;
     @NotBlank
     @PartitionKey // Need to clarify if multiple parties are supported for a given ship node.
     private String type;
@@ -24,7 +24,7 @@ public class ShipNode {
     public ShipNode() {
     }
 
-    public ShipNode(Long id, String name, boolean isActive, boolean activeOperation, boolean ecommActiveOperation,
+    public ShipNode(Long id, String name, Boolean isActive, Boolean activeOperation, Boolean ecommActiveOperation,
             String type) {
         this.id = id;
         this.name = name;
