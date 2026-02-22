@@ -3,20 +3,25 @@ package com.aatreya.inventorymgmt.model;
 import com.azure.spring.data.cosmos.core.mapping.Container;
 import com.azure.spring.data.cosmos.core.mapping.PartitionKey;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import org.springframework.data.annotation.Id;
 import java.time.LocalDate;
 
 @Container(containerName = "SKU")
 public class Item {
-
+    @NotNull
     @Id
     private long sku_id;
+    @NotBlank
     private String name;
     private String UPC;
     private String GTIN;
     private String WIN;
     private String EAN;
-    private long ISBN;
+    private Long ISBN;
+    @NotBlank
     @PartitionKey
     private String category;
     private boolean isActive;
@@ -32,7 +37,7 @@ public class Item {
     public Item() {
     }
 
-    public Item(long sku_id, String name, String uPC, String gTIN, String wIN, String eAN, long iSBN, String category,
+    public Item(long sku_id, String name, String uPC, String gTIN, String wIN, String eAN, Long iSBN, String category,
             boolean isActive, boolean isPreOrder, LocalDate preOrderStartDate, LocalDate preOrderEndDate,
             boolean isBackOrder, LocalDate backOrderStartDate, LocalDate backOrderEndDate, LocalDate ecommActiveDate,
             boolean marketplaceEnabled) {
@@ -103,11 +108,11 @@ public class Item {
         EAN = eAN;
     }
 
-    public long getISBN() {
+    public Long getISBN() {
         return ISBN;
     }
 
-    public void setISBN(long iSBN) {
+    public void setISBN(Long iSBN) {
         ISBN = iSBN;
     }
 

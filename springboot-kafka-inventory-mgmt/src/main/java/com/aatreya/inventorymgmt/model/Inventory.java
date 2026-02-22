@@ -2,22 +2,29 @@ package com.aatreya.inventorymgmt.model;
 
 import com.azure.spring.data.cosmos.core.mapping.Container;
 import com.azure.spring.data.cosmos.core.mapping.PartitionKey;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import org.springframework.data.annotation.Id;
 
 @Container(containerName = "inventory")
 public class Inventory {
-
+    @NotBlank
     @Id
     private String updateId;
-    private long item_sku;
-    private long quantityUpdate;
+    @NotNull
+    private Long item_sku;
+    @NotNull
+    private Long quantityUpdate;
+    @NotNull
     @PartitionKey
     private ShipNode shipNode;
 
     public Inventory() {
     }
 
-    public Inventory(String updateId, long item_sku, long quantityUpdate, ShipNode shipNode) {
+    public Inventory(String updateId, Long item_sku, Long quantityUpdate, ShipNode shipNode) {
         this.updateId = updateId;
         this.item_sku = item_sku;
         this.quantityUpdate = quantityUpdate;
@@ -32,19 +39,19 @@ public class Inventory {
         this.updateId = updateId;
     }
 
-    public long getItem_sku() {
+    public Long getItem_sku() {
         return item_sku;
     }
 
-    public void setItem_sku(long item_sku) {
+    public void setItem_sku(Long item_sku) {
         this.item_sku = item_sku;
     }
 
-    public long getQuantityUpdate() {
+    public Long getQuantityUpdate() {
         return quantityUpdate;
     }
 
-    public void setQuantityUpdate(long quantityUpdate) {
+    public void setQuantityUpdate(Long quantityUpdate) {
         this.quantityUpdate = quantityUpdate;
     }
 

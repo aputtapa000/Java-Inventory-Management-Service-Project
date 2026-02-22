@@ -1,23 +1,30 @@
 package com.aatreya.inventorymgmt.model;
 import com.azure.spring.data.cosmos.core.mapping.Container;
 import com.azure.spring.data.cosmos.core.mapping.PartitionKey;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import org.springframework.data.annotation.Id;
 
 @Container(containerName = "ShipNode")
 public class ShipNode {
+    @NotNull
     @Id
-    private long id;
+    private Long id;
+    @NotBlank
     private String name;
     private boolean isActive;
     private boolean activeOperation;
     private boolean ecommActiveOperation;
+    @NotBlank
     @PartitionKey // Need to clarify if multiple parties are supported for a given ship node.
     private String type;
     
     public ShipNode() {
     }
 
-    public ShipNode(long id, String name, boolean isActive, boolean activeOperation, boolean ecommActiveOperation,
+    public ShipNode(Long id, String name, boolean isActive, boolean activeOperation, boolean ecommActiveOperation,
             String type) {
         this.id = id;
         this.name = name;
@@ -27,11 +34,11 @@ public class ShipNode {
         this.type = type;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
