@@ -33,7 +33,7 @@ class CosmosRepositoryConfigTests {
         CosmosTemplate template = Mockito.mock(CosmosTemplate.class);
         MappingCosmosConverter converter = Mockito.mock(MappingCosmosConverter.class);
         CosmosMappingContext mappingContext = new CosmosMappingContext();
-        Mockito.when(converter.getMappingContext()).thenReturn(mappingContext);
+        Mockito.when(converter.getMappingContext()).thenReturn((org.springframework.data.mapping.context.MappingContext) (Object) mappingContext);
         Mockito.when(template.getConverter()).thenReturn(converter);
         return template;
     }

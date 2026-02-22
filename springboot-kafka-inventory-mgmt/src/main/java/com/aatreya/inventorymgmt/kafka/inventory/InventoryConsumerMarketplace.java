@@ -28,6 +28,14 @@ public class InventoryConsumerMarketplace {
                 LOGGER.error("ShipNode (partition key) cannot be null or empty");
                 return;
             }
+            if (inventory.getItem_sku() <= 0) {
+                LOGGER.error("Item SKU must be a positive number");
+                return;
+            }
+            if (inventory.getQuantityUpdate() <= 0) {
+                LOGGER.error("Quantity update must be a positive number");
+                return;
+            }
             
             inventoryRepository.save(inventory);
             LOGGER.info(String.format("Inventory saved to Cosmos DB with ID: %s", inventory.getUpdateId()));

@@ -9,29 +9,18 @@ public class Inventory {
 
     @Id
     private String updateId;
-    private Item itemName;
+    private long item_sku;
     private long quantityUpdate;
-    private String UPC;
-    private String GTIN;
-    private String WIN;
-    private String EAN;
-    private long ISBN;
     @PartitionKey
     private ShipNode shipNode;
 
     public Inventory() {
     }
 
-    public Inventory(String updateId, Item itemName, long quantityUpdate, String uPC, String gTIN, String wIN,
-            String eAN, long iSBN, ShipNode shipNode) {
+    public Inventory(String updateId, long item_sku, long quantityUpdate, ShipNode shipNode) {
         this.updateId = updateId;
-        this.itemName = itemName;
+        this.item_sku = item_sku;
         this.quantityUpdate = quantityUpdate;
-        UPC = uPC;
-        GTIN = gTIN;
-        WIN = wIN;
-        EAN = eAN;
-        ISBN = iSBN;
         this.shipNode = shipNode;
     }
 
@@ -43,12 +32,12 @@ public class Inventory {
         this.updateId = updateId;
     }
 
-    public Item getItemName() {
-        return itemName;
+    public long getItem_sku() {
+        return item_sku;
     }
 
-    public void setItemName(Item itemName) {
-        this.itemName = itemName;
+    public void setItem_sku(long item_sku) {
+        this.item_sku = item_sku;
     }
 
     public long getQuantityUpdate() {
@@ -57,46 +46,6 @@ public class Inventory {
 
     public void setQuantityUpdate(long quantityUpdate) {
         this.quantityUpdate = quantityUpdate;
-    }
-
-    public String getUPC() {
-        return UPC;
-    }
-
-    public void setUPC(String uPC) {
-        UPC = uPC;
-    }
-
-    public String getGTIN() {
-        return GTIN;
-    }
-
-    public void setGTIN(String gTIN) {
-        GTIN = gTIN;
-    }
-
-    public String getWIN() {
-        return WIN;
-    }
-
-    public void setWIN(String wIN) {
-        WIN = wIN;
-    }
-
-    public String getEAN() {
-        return EAN;
-    }
-
-    public void setEAN(String eAN) {
-        EAN = eAN;
-    }
-
-    public long getISBN() {
-        return ISBN;
-    }
-
-    public void setISBN(long iSBN) {
-        ISBN = iSBN;
     }
 
     public ShipNode getShipNode() {
@@ -109,9 +58,10 @@ public class Inventory {
 
     @Override
     public String toString() {
-        return "Inventory [updateId=" + updateId + ", itemName=" + itemName + ", quantityUpdate=" + quantityUpdate
-                + ", UPC=" + UPC + ", GTIN=" + GTIN + ", WIN=" + WIN + ", EAN=" + EAN + ", ISBN=" + ISBN + ", shipNode="
-                + shipNode + "]";
+        return "Inventory [updateId=" + updateId + ", item_sku=" + item_sku + ", quantityUpdate=" + quantityUpdate
+                + ", shipNode=" + shipNode + "]";
     }
+
+    
 
 }

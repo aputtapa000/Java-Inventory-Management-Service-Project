@@ -5,7 +5,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 
 import com.aatreya.inventorymgmt.model.Inventory;
-import com.aatreya.inventorymgmt.model.Item;
 import com.aatreya.inventorymgmt.model.ShipNode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,13 +48,8 @@ class InventoryProducerTests {
     void sendMessage_validTopic_sendsMessageWithTopicHeader() {
         Inventory inventory = new Inventory(
             "id-1",
-            new Item(),
+            20L,
             1,
-            "upc",
-            "gtin",
-            "win",
-            "ean",
-            123L,
             new ShipNode());
 
         inventoryProducer.sendMessage("inventory-store-topic", inventory);

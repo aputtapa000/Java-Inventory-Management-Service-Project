@@ -6,7 +6,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 
 import com.aatreya.inventorymgmt.model.Inventory;
-import com.aatreya.inventorymgmt.model.Item;
 import com.aatreya.inventorymgmt.model.ShipNode;
 import com.aatreya.inventorymgmt.repository.InventoryRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -72,13 +71,8 @@ class InventoryConsumerDSVTests {
     private Inventory validInventory() {
         return new Inventory(
                 "id-1",
-                new Item(),
+                20L,
                 10,
-                "upc",
-                "gtin",
-                "win",
-                "ean",
-                123L,
                 new ShipNode());
     }
 }

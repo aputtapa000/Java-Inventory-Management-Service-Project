@@ -44,6 +44,13 @@ public class JsonMessageController {
 
     @PostMapping("/item/publish")
     public ResponseEntity<String> itemPublish(@RequestBody Item item, @RequestHeader("topic") String topic) {
+        
+        // Generate UUID at the service layer before sending to Kafka
+        // This ensures the same ID is used throughout the entire flow
+        if (item.getSku_id() <= 0L) {
+            item.setSku_id(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE); // Generate a positive long ID
+        }
+
         itemProducer.sendMessage(topic, item);
         return ResponseEntity.ok("Json message sent to Kafka topic successfully");
     }
@@ -51,6 +58,13 @@ public class JsonMessageController {
     @PostMapping("/shipnode/publish")
     public ResponseEntity<String> shipNodePublish(@RequestBody ShipNode shipNode,
             @RequestHeader("topic") String topic) {
+        
+        // Generate UUID at the service layer before sending to Kafka
+        // This ensures the same ID is used throughout the entire flow
+        if (shipNode.getId() <= 0L) {
+            shipNode.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE); // Generate a positive long ID
+        } 
+                
         shipNodeProducer.sendMessage(topic, shipNode);
         return ResponseEntity.ok("Json message sent to Kafka topic successfully");
     }

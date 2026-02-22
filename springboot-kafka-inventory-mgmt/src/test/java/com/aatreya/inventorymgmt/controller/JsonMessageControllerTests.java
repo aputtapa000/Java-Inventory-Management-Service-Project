@@ -59,15 +59,9 @@ class JsonMessageControllerTests {
     @Test
     void inventoryPublish_generatesIdWhenMissing() throws Exception {
         Inventory inventory = new Inventory();
-        Item item = new Item();
         ShipNode shipNode = new ShipNode();
-        inventory.setItemName(item);
+        inventory.setItem_sku(20L);
         inventory.setQuantityUpdate(5);
-        inventory.setUPC("upc");
-        inventory.setGTIN("gtin");
-        inventory.setWIN("win");
-        inventory.setEAN("ean");
-        inventory.setISBN(1234567890L);
         inventory.setShipNode(shipNode);
 
         mockMvc.perform(post("/api/v1/kafka/inventory/publish")
@@ -85,15 +79,9 @@ class JsonMessageControllerTests {
     @Test
     void inventoryPublish_preservesExistingId() throws Exception {
         Inventory inventory = new Inventory();
-        Item item = new Item();
         inventory.setUpdateId("inv-123");
-        inventory.setItemName(item);
+        inventory.setItem_sku(20L);
         inventory.setQuantityUpdate(5);
-        inventory.setUPC("upc");
-        inventory.setGTIN("gtin");
-        inventory.setWIN("win");
-        inventory.setEAN("ean");
-        inventory.setISBN(1234567890L);
         inventory.setShipNode(new ShipNode());
 
         mockMvc.perform(post("/api/v1/kafka/inventory/publish")
@@ -111,7 +99,7 @@ class JsonMessageControllerTests {
     @Test
     void inventoryPublish_missingTopicHeader_returnsBadRequest() throws Exception {
         Inventory inventory = new Inventory();
-        inventory.setItemName(new Item());
+        inventory.setItem_sku(20L);
         inventory.setShipNode(new ShipNode());
 
         mockMvc.perform(post("/api/v1/kafka/inventory/publish")
